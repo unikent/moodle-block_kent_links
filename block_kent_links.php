@@ -26,7 +26,7 @@ class block_kent_links extends block_base {
      * block initializations
      */
     public function init() {
-        $this->title = "Kent Admin Links";
+        $this->title = "Kent admin links";
     }
 
     /**
@@ -102,5 +102,14 @@ class block_kent_links extends block_base {
         }
 
         return $links;
+    }
+
+    /**
+     * Returns the role that best describes the KCL block... 'navigation'
+     *
+     * @return string 'navigation'
+     */
+    public function get_aria_role() {
+        return 'navigation';
     }
 }
