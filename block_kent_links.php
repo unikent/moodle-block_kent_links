@@ -70,6 +70,10 @@ class block_kent_links extends block_list {
     public function get_links() {
         global $DB, $USER;
 
+        if (isset($USER->profile['kentacctype']) && $USER->profile['kentacctype'] !== 'staff') {
+            return array();
+        }
+
         $links = array();
         $ctx = \context_system::instance();
         $isadmin = has_capability('moodle/site:config', $ctx);
