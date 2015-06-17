@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-$string['pluginname'] = 'Kent admin links';
+$string['pluginname'] = 'Admin links';
 
 $string['kent_links:addinstance'] = 'Add a new Kent links block';
 $string['kent_links:myaddinstance'] = 'Add a new Kent links block to My home';

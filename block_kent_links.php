@@ -21,12 +21,12 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-class block_kent_links extends block_base {
+class block_kent_links extends block_list {
     /**
      * block initializations
      */
     public function init() {
-        $this->title = "Kent admin links";
+        $this->title = "Admin links";
     }
 
     /**
@@ -35,37 +35,31 @@ class block_kent_links extends block_base {
      * @return object
      */
     public function get_content() {
-        global $OUTPUT;
-
         if ($this->content !== null) {
             return $this->content;
         }
 
-        // Guest account does not have anything.
-        if (isguestuser() or !isloggedin()) {
-            $this->content = "";
-            return "";
+        $this->content = new \stdClass();
+        $this->content->icons = null;
+        $this->content->items = array();
+        $this->content->footer = '';
+
+        if (isguestuser() || !isloggedin()) {
+            return $this->content;
         }
 
         $links = $this->get_links();
-
-        $this->content = new \stdClass();
-        $this->content->text = '';
-        $this->content->footer = '';
-
         if (empty($links)) {
             return $this->content;
         }
 
-        $this->content->text = '<ul>';
         foreach ($links as $k => $link) {
             $link = \html_writer::tag('a', $k, array(
                 'href' => $link
             ));
 
-            $this->content->text .= \html_writer::tag('li', $link);
+            $this->content->items[] = $link;
         }
-        $this->content->text .= '</ul>';
 
         return $this->content;
     }
@@ -75,6 +69,16 @@ class block_kent_links extends block_base {
      */
     public function get_links() {
         global $DB, $USER;
+
+        if (isset($USER->profile['kentacctype']) && $USER->profile['kentacctype'] !== 'staff') {
+            return array();
+        }
+
+        $cache = \cache::make('block_kent_course_overview', 'data');
+        $cachekey = 'links_' . $USER->id;
+        if (($cachecontent = $cache->get($cachekey)) !== false) {
+            return $cachecontent;
+        }
 
         $links = array();
         $ctx = \context_system::instance();
@@ -100,6 +104,8 @@ class block_kent_links extends block_base {
             $clapath = new \moodle_url('/mod/cla/admin.php');
             $links["CLA administration"] = $clapath;
         }
+
+        $cache->set($cachekey, $links);
 
         return $links;
     }
