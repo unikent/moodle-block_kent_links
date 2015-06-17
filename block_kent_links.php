@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-class block_kent_links extends block_base {
+class block_kent_links extends block_list {
     /**
      * block initializations
      */
@@ -50,22 +50,21 @@ class block_kent_links extends block_base {
         $links = $this->get_links();
 
         $this->content = new \stdClass();
-        $this->content->text = '';
+        $this->content->icons = null;
+        $this->content->items = array();
         $this->content->footer = '';
 
         if (empty($links)) {
             return $this->content;
         }
 
-        $this->content->text = '<ul>';
         foreach ($links as $k => $link) {
             $link = \html_writer::tag('a', $k, array(
                 'href' => $link
             ));
 
-            $this->content->text .= \html_writer::tag('li', $link);
+            $this->content->items[] = $link;
         }
-        $this->content->text .= '</ul>';
 
         return $this->content;
     }
