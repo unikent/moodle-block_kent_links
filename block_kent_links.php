@@ -26,7 +26,7 @@ class block_kent_links extends block_list {
      * block initializations
      */
     public function init() {
-        $this->title = "Kent admin links";
+        $this->title = "Admin links";
     }
 
     /**
@@ -74,6 +74,12 @@ class block_kent_links extends block_list {
             return array();
         }
 
+        $cache = \cache::make('block_kent_course_overview', 'data');
+        $cachekey = 'links_' . $USER->id;
+        if (($cachecontent = $cache->get($cachekey)) !== false) {
+            return $cachecontent;
+        }
+
         $links = array();
         $ctx = \context_system::instance();
         $isadmin = has_capability('moodle/site:config', $ctx);
@@ -98,6 +104,8 @@ class block_kent_links extends block_list {
             $clapath = new \moodle_url('/mod/cla/admin.php');
             $links["CLA administration"] = $clapath;
         }
+
+        $cache->set($cachekey, $links);
 
         return $links;
     }

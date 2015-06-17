@@ -24,6 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2015060500;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2015061700;        // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2013110500;        // Requires this Moodle version
 $plugin->component = 'block_kent_links'; // Full name of the plugin (used for diagnostics).
+$plugin->dependencies = array(
+    'block_kent_course_overview' => 2015061200
+);
