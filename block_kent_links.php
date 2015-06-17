@@ -35,25 +35,20 @@ class block_kent_links extends block_list {
      * @return object
      */
     public function get_content() {
-        global $OUTPUT;
-
         if ($this->content !== null) {
             return $this->content;
         }
-
-        // Guest account does not have anything.
-        if (isguestuser() or !isloggedin()) {
-            $this->content = "";
-            return "";
-        }
-
-        $links = $this->get_links();
 
         $this->content = new \stdClass();
         $this->content->icons = null;
         $this->content->items = array();
         $this->content->footer = '';
 
+        if (isguestuser() || !isloggedin()) {
+            return $this->content;
+        }
+
+        $links = $this->get_links();
         if (empty($links)) {
             return $this->content;
         }
