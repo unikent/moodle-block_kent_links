@@ -70,7 +70,7 @@ class block_kent_links extends block_list {
     public function get_links() {
         global $DB, $USER;
 
-        if (isset($USER->profile['kentacctype']) && $USER->profile['kentacctype'] !== 'staff') {
+        if (!isset($USER->profile['kentacctype']) || !in_array($USER->profile['kentacctype'], array('staff', 'tempstaff'))) {
             return array();
         }
 
