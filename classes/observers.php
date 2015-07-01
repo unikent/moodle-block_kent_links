@@ -14,9 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-$string['pluginname'] = 'Admin links';
+/**
+ * Kent Admin Link Block
+ *
+ * @package    blocks_kent_links
+ * @copyright  2015 Skylar Kelty <S.Kelty@kent.ac.uk>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
-$string['kent_links:addinstance'] = 'Add a new Kent links block';
-$string['kent_links:myaddinstance'] = 'Add a new Kent links block to My home';
+namespace block_kent_course_overview;
 
-$string['cachedef_data'] = 'KAL Data';
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Kent Course Overview observers
+ */
+class observers {
+    /**
+     * Triggered when an enrolment or role is updated.
+     *
+     * @param object $event
+     */
+    public static function clear_cache($event) {
+        $cache = \cache::make('block_kent_links', 'data');
+        $cache->delete("links_" . $event->relateduserid);
+
+        return true;
+    }
+}

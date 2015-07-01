@@ -14,9 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-$string['pluginname'] = 'Admin links';
-
-$string['kent_links:addinstance'] = 'Add a new Kent links block';
-$string['kent_links:myaddinstance'] = 'Add a new Kent links block to My home';
-
-$string['cachedef_data'] = 'KAL Data';
+/**
+ * Our MUC definitions
+ */
+$definitions = array(
+    'data' => array(
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true
+    )
+);

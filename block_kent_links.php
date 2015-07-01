@@ -74,7 +74,7 @@ class block_kent_links extends block_list {
             return array();
         }
 
-        $cache = \cache::make('block_kent_course_overview', 'data');
+        $cache = \cache::make('block_kent_links', 'data');
         $cachekey = 'links_' . $USER->id;
         if (($cachecontent = $cache->get($cachekey)) !== false) {
             return $cachecontent;
@@ -87,7 +87,7 @@ class block_kent_links extends block_list {
         // Add the rollover links.
         if ($isadmin || \local_kent\User::has_course_update_role($USER->id)) {
             $rolloveradminpath = new \moodle_url("/local/rollover/");
-            $links["Rollover admin"] = $rolloveradminpath;
+            $links["Rollover pages"] = $rolloveradminpath;
         }
 
         // Add dep admin links.
