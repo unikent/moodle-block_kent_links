@@ -35,13 +35,15 @@ class block_kent_links extends block_list {
      * @return object
      */
     public function get_content() {
+        global $OUTPUT;
+
         if ($this->content !== null) {
             return $this->content;
         }
 
         $this->content = new \stdClass();
-        $this->content->icons = null;
         $this->content->items = array();
+        $this->content->icons = array();
         $this->content->footer = '';
 
         if (isguestuser() || !isloggedin()) {
@@ -59,6 +61,7 @@ class block_kent_links extends block_list {
             ));
 
             $this->content->items[] = $link;
+            $this->content->icons[] = $OUTPUT->pix_icon('i/navigationitem', $k, 'moodle', array('aria-hidden' => true));
         }
 
         return $this->content;
